@@ -1,5 +1,6 @@
 import inkex
 import os
+import sys
 import simpletransform
 import cubicsuperpath
 from collections import OrderedDict
@@ -9,25 +10,29 @@ class PlantumlExport(inkex.EffectExtension):
     """Export a plantuml analog description based on the nodes in an inkscape file"""
 
     def add_arguments(self, pars):
-        pars.add_argument("--output_dir", type="string", dest="output_dir", default="/tmp")
-        pars.add_argument("--output_filename", type="string", dest="output_filename", default="points.csv")
-        pars.add_argument("--origin", type="string", dest="origin", default="south_west_corner")
-        pars.add_argument("--x_offset", type="float", dest="x_offset", default="0.0")
-        pars.add_argument("--y_offset", type="float", dest="y_offset", default="0.0")
+        pars.add_argument("--output_dir", type=str, dest="output_dir", default="/tmp")
+        pars.add_argument("--output_filename", type=str, dest="output_filename", default="points.csv")
+        pars.add_argument("--origin", type=str, dest="origin", default="south_west_corner")
+        pars.add_argument("--x_offset", type=float, dest="x_offset", default="0.0")
+        pars.add_argument("--y_offset", type=float, dest="y_offset", default="0.0")
 
     def effect(self):
-        ep = self.options.seperator
         f = open(
             os.path.join(self.options.output_dir, self.options.output_filename), "w"
         )
         x_off = self.options.x_offset
         y_off = self.options.y_offset
         # Get document height and trim the units string off the end
-        doc_h = float(self.getDocumentHeight()[:-2])
+        # print(self.__dict__, file=sys.stderr)
+        doc_h = float(self.svg.get('height'))
 
         node_dict = OrderedDict()
 
-        for node in self.selected.values():
+        if not self.svg.selected:
+            raise inkex.AbortExtension("Please select an object.")
+
+
+        for node in self.svg.selected.values():
             if node.tag == inkex.addNS("path", "svg"):
                 # Make sure the path is in absolute coords
                 simpletransform.fuseTransform(node)
