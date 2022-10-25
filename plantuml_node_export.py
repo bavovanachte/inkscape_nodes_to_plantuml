@@ -1,8 +1,8 @@
 import inkex
 import os
 import sys
-import simpletransform
-import cubicsuperpath
+from inkex import paths
+from inkex import transforms
 from collections import OrderedDict
 
 
@@ -35,8 +35,8 @@ class PlantumlExport(inkex.EffectExtension):
         for node in self.svg.selected.values():
             if node.tag == inkex.addNS("path", "svg"):
                 # Make sure the path is in absolute coords
-                simpletransform.fuseTransform(node)
-                path = cubicsuperpath.parsePath(node.get("d"))
+                node.apply_transform()
+                path = paths.CubicSuperPath(node.get("d"))
                 for sub_path in path:
                     # sub_path represents a list of all nodes in the path
                     for node in sub_path:
