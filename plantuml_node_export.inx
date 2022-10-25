@@ -5,8 +5,7 @@
 
   <dependency type="executable" location="extensions">plantuml_node_export.py</dependency>
 
-  <param name="output_dir" type="string" _gui-text="Output Directory">/tmp</param>
-  <param name="output_filename" type="string" _gui-text="Output Filename">points.csv</param>
+  <param name="output_filename" type="path" gui-text="Output Filename" mode="file_new" filetypes="uml">/tmp/out.uml</param>
   <param name="origin" type="optiongroup" _gui-text="Select coordinate's origin: ">
     <option value="south_west_corner">South West Corner: +X to the right, +Y upwards</option>
     <option value="north_west_corner">North West Corner: +X to the right, +Y downwards</option>
