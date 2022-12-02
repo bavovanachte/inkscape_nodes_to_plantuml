@@ -1,39 +1,70 @@
-# Inkscape Extension to Output Path Nodes to CSV
+# Inkscape Extension to exprt all nodes of a given path to a plantuml-compatible file.
 
-Simple Inkscape extension to convert nodes of paths to x,y coordinates.
+Simple Inkscape extension to convert nodes of paths to x,y coordinates which can be used in plantuml files as
+"analog" signals
 
 Features:
 - X, Y offsets
 - Configurable origin
-- Configurable seperator - , | ","
 - Output file
 
 ![](extension_parameters.png)
 
-Insipration came from tekolay's [csv_output](https://github.com/tbekolay/csv_output) and jwcliff's [Inkscape_Exportxy](https://github.com/jwcliff/Inkscape_Exportxy)
+Insipration came from
+- tekolay's [csv_output](https://github.com/tbekolay/csv_output)
+- jwcliff's [Inkscape_Exportxy](https://github.com/jwcliff/Inkscape_Exportxy)
+- camrbuss's [nodes_to_csv](https://github.com/camrbuss/nodes_to_csv)
 
-## Convert Text to Points Example
+## Usage
 
-1. Create your text
-2. Convert text to paths (Path > Object to Path)
-3. Select each path/letter
-4. Select the "Edit path by nodes" tool
-5. Export (Extensions > Export > Nodes to CSV...)
-6. Plot or do other fun things!
+1. Set your document size so that the width and height (in user units) match the steps/resolution you want to export to
+   plantuml. E.g. if you want your exported analog signal to be 100 plantuml time units wide, make sure the path in inkscape
+   is 100 inkscape user units wide.
+2. For ease of use, set up a grid (Document Properties -> Grids) with 1 unit wide
+3. Draw the desired shape using the bezier curve tool, optionally using the grid to put your nodes.
+   No 2 nodes are allowed to have the same X coordinate, that's why the grid can be useful
+3. Select the path to export
+5. Export (Extensions > Export > Plantuml node export...)
+
+
+## Example
+
+The following shape was drawn in a 100px by 100px document.
+
+![](example_shape.png)
+
+An export of this shape yields the following file:
 
 ```
--87.43034,509.56655,
--90.7739936,505.07739,
--94.6749225,500.61918,
--92.5696593,498.66872,
--90.4024766,496.2229,
--88.390093,493.43652,
--86.780185,490.40247,
+@+5.0
+out is 25.0
+@+10.0
+out is 45.0
+@+10.0
+out is 60.0
+@+5.0
+out is 45.0
+@+10.0
+out is 30.0
+@+10.0
+out is 50.0
+@+10.0
+out is 55.0
+@+15.0
+out is 40.0
+@+5.0
+out is 20.0
+@+10.0
+out is 10.0
+@+10.0
+out is 5.0
 ```
 
-![](points.png)
+And rendered using plantuml:
+
+![](example_rendered.png)
 
 ## Installation
 
-1. Copy `nodes_to_csv.inx` and `nodes_to_csv.py` to your Inkscape extensions folder. On Linux it is located at `~/.config/inkscape/extensions/`
-2. Relaunch Inscape
+1. Copy `plantuml_node_export.inx` and `plantuml_node_export.py` to your Inkscape extensions folder. On Linux it is located at `~/.config/inkscape/extensions/`
+2. Relaunch Inkscape
