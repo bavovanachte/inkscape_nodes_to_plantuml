@@ -68,3 +68,13 @@ And rendered using plantuml:
 
 1. Copy `plantuml_node_export.inx` and `plantuml_node_export.py` to your Inkscape extensions folder. On Linux it is located at `~/.config/inkscape/extensions/`
 2. Relaunch Inkscape
+
+## Potential issues
+
+1. The extension exports the coordinates in "User units", which could correspond to pixels, millimeters or elephants.
+   If you've been playing around with the display and size unit in the document properties window, it's possible that
+   the scale (ratio of user units to display units) setting is not 100%, which could unexpected values in the output.
+   The "scale" setting looks as follows:
+
+   ![](faq_user_units.png)
+
