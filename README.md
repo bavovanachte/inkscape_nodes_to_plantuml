@@ -78,3 +78,6 @@ And rendered using plantuml:
 
    ![](faq_user_units.png)
 
+2. I've had issues installing this on inkscape versions > 1.1 on Linux. If you run into issues that might be related to
+   the extension system in inkscape itself, it might be worth trying to downgrade first.
+
