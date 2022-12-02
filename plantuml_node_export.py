@@ -47,13 +47,13 @@ class PlantumlExport(inkex.EffectExtension):
                             y = doc_h - y + y_off
                         else:
                             y = y + y_off
-                        node_dict[x] = y
-        previous_x = None
+                        if x in node_dict:
+                            raise inkex.AbortExtension("Duplicate entry at x = {x_coordinate}".format(x_coordinate=x))
+                        else:
+                            node_dict[x] = y
+        previous_x = 0.0
         for x, y in node_dict.items():
-            if previous_x is None:
-                f.write("@{x_offset}\n".format(x_offset=x))
-            else:
-                f.write("@+{x_offset}\n".format(x_offset=x-previous_x))
+            f.write("@+{x_offset}\n".format(x_offset=x-previous_x))
             previous_x = x
             f.write("out is {y_value}\n".format(y_value=y))
 
